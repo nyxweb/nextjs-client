@@ -1,8 +1,12 @@
+import { FC } from 'react';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
+import withApollo from '../lib/apollo';
+
 import Layout from '../components/layout';
 import GlobalStyles from '../styles';
 
-const App: any = ({ Component, pageProps }: any) => {
+const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <Layout>
       <Head>
@@ -16,4 +20,4 @@ const App: any = ({ Component, pageProps }: any) => {
   );
 };
 
-export default App;
+export default withApollo(App);

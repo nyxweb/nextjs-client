@@ -1,10 +1,10 @@
-import { FC } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import withApollo from '../lib/apollo';
+import { withApollo } from '../lib/apollo';
 
 import Layout from '../components/layout';
 import GlobalStyles from '../styles';
+import { FC } from 'react';
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (

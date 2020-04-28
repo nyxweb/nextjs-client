@@ -1,19 +1,43 @@
+import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_CHARACTERS } from './queries';
+import DataTable from 'components/ui/DataTable';
+import Pagination from 'components/ui/Pagination';
+import { Container } from './styles';
 
 const Characters = () => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+
   const { loading, data } = useQuery(GET_CHARACTERS, {
-    variables: { page: 1, perPage: 10 },
-    notifyOnNetworkStatusChange: true,
+    variables: { page, perPage },
   });
 
+  const cells = [
+    { name: 'rank', page, perPage },
+    { name: 'name', key: 'Name' },
+    { name: 'class', key: 'Class' },
+    { name: 'level', key: 'cLevel' },
+    { name: 'resets', key: 'Resets' },
+  ];
+
   return (
-    <div>
-      <div>Characters:</div>
-      {loading
-        ? `Loading...`
-        : data.characters.map((char: any, i: number) => <div key={i}>{char.Name}</div>)}
-    </div>
+    <>
+      <Container>
+        {loading ? (
+          `Loading...`
+        ) : (
+          <DataTable data={data.characters.rows} cells={cells} />
+        )}
+      </Container>
+      <Pagination
+        page={page}
+        perPage={perPage}
+        setPage={setPage}
+        setPerPage={setPerPage}
+        totalCount={loading ? 0 : data.characters.count}
+      />
+    </>
   );
 };
 

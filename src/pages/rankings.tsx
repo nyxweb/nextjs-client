@@ -1,25 +1,36 @@
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
 
 import Characters from '../components/pages/rankings/characters';
 import Guilds from '../components/pages/rankings/guilds';
+import DropDown from 'components/ui/DropDown';
 
 const Rankings = () => {
-  const [selected, setSelected] = useState<string>();
+  const [selected, setSelected] = useState('');
 
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelected(e.target.value);
-  };
+  const options = [
+    { name: 'Characters', value: 'characters' },
+    { name: 'Guilds', value: 'guilds' },
+  ];
 
   return (
     <div>
-      <select onChange={handleChange}>
-        <option value=''>-</option>
-        <option value='characters'>Characters</option>
-        <option value='guilds'>Guilds</option>
-      </select>
-      <br />
-      <br />
-      <div>{!selected || selected === 'characters' ? <Characters /> : <Guilds />}</div>
+      <div style={{ padding: 20, display: 'flex', justifyContent: 'center' }}>
+        <DropDown
+          title='select ranking'
+          options={options}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      </div>
+      <div>
+        {selected ? (
+          selected === 'characters' ? (
+            <Characters />
+          ) : selected === 'guilds' ? (
+            <Guilds />
+          ) : null
+        ) : null}
+      </div>
     </div>
   );
 };

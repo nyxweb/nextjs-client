@@ -29,17 +29,20 @@ export default createGlobalStyle`
     }
   }
 
-  input {
+  input,
+  button {
     background-color: #131f2d;
     border: 1px solid #2c3545;
     color: #7d8a9f;
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 3px;
-    transition: all 0.3s ease;
+    transition: 0.3s;
     outline: none;
 
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
       border: 1px solid #3e4e69;
     }
   }

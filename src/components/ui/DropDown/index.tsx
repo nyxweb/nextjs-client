@@ -16,12 +16,13 @@ import { ArrowUp, ArrowDown, Remove } from 'components/ui/icons';
 export type DropDownOption = { name?: string; value: string | number };
 
 interface Props {
-  title: string;
+  title?: string;
   options: Array<DropDownOption>;
   selected: string | number;
   setSelected: (option: any) => void;
   unSelect?: boolean;
   width?: number | string;
+  height?: number | string;
 }
 
 const DropDown: FC<Props> = ({
@@ -31,6 +32,7 @@ const DropDown: FC<Props> = ({
   setSelected,
   unSelect = true,
   width = 200,
+  height,
 }) => {
   const [open, setOpen] = useState(false);
   const dropRef = useRef<any>(null);
@@ -47,7 +49,7 @@ const DropDown: FC<Props> = ({
   }, []);
 
   const handleOptionClick = (option: DropDownOption) => {
-    if (selected && selected === option.value) {
+    if (selected === option.value) {
       if (unSelect) setSelected('');
     } else {
       setSelected(option.value);
@@ -57,14 +59,23 @@ const DropDown: FC<Props> = ({
 
   return (
     <Container ref={dropRef}>
-      <Title onClick={() => setOpen(!open)} style={{ width }}>
-        {selected ? (
-          <TitleWrapper>
-            <TopTitle>{title}</TopTitle>
-            <SelectedTitle>{selected}</SelectedTitle>
-          </TitleWrapper>
+      <Title
+        onClick={() => setOpen(!open)}
+        style={{ width, height: height ? height : !title ? 35 : 45 }}
+      >
+        {selected !== '' ? (
+          title ? (
+            <TitleWrapper>
+              <TopTitle>{title}</TopTitle>
+              <SelectedTitle>
+                {options.find((o) => o.value === selected)?.name || selected}
+              </SelectedTitle>
+            </TitleWrapper>
+          ) : (
+            options.find((o) => o.value === selected)?.name || selected
+          )
         ) : (
-          title
+          title || 'select option'
         )}
         <Arrow>{open ? <ArrowUp /> : <ArrowDown />}</Arrow>
       </Title>

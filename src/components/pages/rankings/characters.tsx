@@ -1,9 +1,23 @@
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
+import { v4 as uuid } from 'uuid';
+
 import { GET_CHARACTERS } from './queries';
-import DataTable from 'components/ui/DataTable';
-import Pagination from 'components/ui/Pagination';
 import { Container } from './styles';
+import { getClassName } from 'utils/character';
+
+import Pagination from 'components/ui/Pagination';
+import {
+  Row,
+  HeadCell,
+  Cell,
+  Table,
+  Thead,
+  HeadRow,
+  Tbody,
+} from 'components/ui/DataTable/styles';
+
+type Character = any;
 
 const Characters = () => {
   const [page, setPage] = useState(1);
@@ -13,21 +27,41 @@ const Characters = () => {
     variables: { page, perPage },
   });
 
-  const cells = [
-    { name: 'rank', page, perPage },
-    { name: 'name', key: 'Name' },
-    { name: 'class', key: 'Class' },
-    { name: 'level', key: 'cLevel' },
-    { name: 'resets', key: 'Resets' },
-  ];
-
   return (
-    <>
+    <div>
       <Container>
         {loading ? (
           `Loading...`
+        ) : !data ? (
+          'Looks like the server is down...'
         ) : (
-          <DataTable data={data.characters.rows} cells={cells} />
+          <Table>
+            <Thead>
+              <HeadRow>
+                <HeadCell>rank</HeadCell>
+                <HeadCell>name</HeadCell>
+                <HeadCell>class</HeadCell>
+                <HeadCell>level</HeadCell>
+              </HeadRow>
+            </Thead>
+            <Tbody>
+              {data.characters.rows.map((char: Character, index: number) => (
+                <Row key={uuid()}>
+                  <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
+                  <Cell>{char.Name}</Cell>
+                  <Cell
+                    dangerouslySetInnerHTML={{
+                      __html: getClassName(char.Class),
+                    }}
+                  />
+                  <Cell>
+                    {char.cLevel}
+                    <sup>{char.Resets}</sup>
+                  </Cell>
+                </Row>
+              ))}
+            </Tbody>
+          </Table>
         )}
       </Container>
       <Pagination
@@ -35,9 +69,9 @@ const Characters = () => {
         perPage={perPage}
         setPage={setPage}
         setPerPage={setPerPage}
-        totalCount={loading ? 0 : data.characters.count}
+        totalCount={loading || !data ? 0 : data.characters.count}
       />
-    </>
+    </div>
   );
 };
 

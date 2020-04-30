@@ -11,7 +11,6 @@ export const Title = styled.div`
   display: flex;
   align-items: center;
   padding: 0 10px;
-  height: 45px;
   background: #1a232e;
   border: 1px solid #23344a;
   border-radius: 4px;

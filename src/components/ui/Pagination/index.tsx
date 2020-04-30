@@ -37,12 +37,11 @@ const Pagination: FC<Props> = ({
     <Container>
       <ChangePerPage>
         <DropDown
-          title='per page'
           options={[{ value: 10 }, { value: 20 }, { value: 50 }]}
           selected={perPage}
           setSelected={setPerPage}
           unSelect={false}
-          width={100}
+          width={70}
         />
       </ChangePerPage>
       <ChangePage>

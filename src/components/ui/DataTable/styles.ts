@@ -29,9 +29,10 @@ export const Tbody = styled.div`
 export const Row = styled.div`
   display: table-row;
   background: rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 
   &:nth-of-type(odd) {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.1);
   }
 
   &:hover {
@@ -41,6 +42,11 @@ export const Row = styled.div`
 
 export const Cell = styled.div`
   display: table-cell;
-  padding: 10px;
   text-align: center;
+  vertical-align: middle;
+  height: 35px;
+
+  sup {
+    color: #e25555;
+  }
 `;

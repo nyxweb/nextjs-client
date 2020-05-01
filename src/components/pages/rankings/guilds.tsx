@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
+import Loader from 'react-loader-spinner';
 
 import { GET_GUILDS } from './queries';
 import { Container } from './styles';
@@ -14,7 +15,7 @@ import {
   Tbody,
   Row,
   Cell,
-} from 'components/ui/DataTable/styles';
+} from 'components/ui/DataTable';
 
 type Guild = any;
 
@@ -30,7 +31,7 @@ const Guilds = () => {
     <div>
       <Container>
         {loading ? (
-          `Loading...`
+          <Loader type='Triangle' color='#00BFFF' height={50} width={50} />
         ) : !data ? (
           'Looks like the server is down...'
         ) : (

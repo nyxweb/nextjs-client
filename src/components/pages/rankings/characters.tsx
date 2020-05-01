@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { v4 as uuid } from 'uuid';
+import Loader from 'react-loader-spinner';
 
 import { GET_CHARACTERS } from './queries';
 import { Container } from './styles';
@@ -15,7 +16,7 @@ import {
   Thead,
   HeadRow,
   Tbody,
-} from 'components/ui/DataTable/styles';
+} from 'components/ui/DataTable';
 
 type Character = any;
 
@@ -31,7 +32,7 @@ const Characters = () => {
     <div>
       <Container>
         {loading ? (
-          `Loading...`
+          <Loader type='Triangle' color='#00BFFF' height={50} width={50} />
         ) : !data ? (
           'Looks like the server is down...'
         ) : (

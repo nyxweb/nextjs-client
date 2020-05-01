@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import Characters from '../components/pages/rankings/characters';
-import Guilds from '../components/pages/rankings/guilds';
+import Characters from 'components/pages/rankings/characters';
+import Guilds from 'components/pages/rankings/guilds';
 import DropDown from 'components/ui/DropDown';
 
 const Rankings = () => {

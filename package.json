@@ -15,15 +15,19 @@
     "graphql": "^15.0.0",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^9.3.5",
+    "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-loader-spinner": "^3.1.14",
     "styled-components": "^5.1.0",
     "uuid": "^7.0.3"
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
+    "@types/nprogress": "^0.2.0",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
+    "@types/react-loader-spinner": "^3.1.0",
     "@types/styled-components": "^5.1.0",
     "@types/uuid": "^7.0.3",
     "typescript": "^3.8.3"

@@ -52,6 +52,7 @@ export const Fill = styled.div`
 
 export const Statistics = styled.div`
   display: flex;
+  background: rgba(50, 76, 125, 0.2);
 `;
 
 export const StatsItem = styled.div`
@@ -62,7 +63,15 @@ export const StatsItem = styled.div`
   padding: 10px;
   width: 76.5px;
   background: rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 `;
 
 export const Icon = styled.div`

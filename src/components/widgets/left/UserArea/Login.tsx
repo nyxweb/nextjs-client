@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import {
   Container,
@@ -7,10 +8,12 @@ import {
   Footer,
   UserInput,
   PassInput,
-  Button,
 } from './styles';
+import Button from 'components/ui/Button';
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+
   return (
     <Container>
       <Header>
@@ -27,7 +30,13 @@ const Login = () => {
         <Link href='/recover-password'>
           <a>Recover Password</a>
         </Link>
-        <Button>Login</Button>
+        <Button
+          type='green'
+          loading={loading}
+          onClick={() => setLoading(!loading)}
+        >
+          Login
+        </Button>
       </Footer>
     </Container>
   );

@@ -38,20 +38,28 @@ const ServerInfo = () => {
           <Title>Accounts</Title>
           <Count>( 6,561 )</Count>
         </StatsItem>
-        <StatsItem>
-          <Icon>
-            <Guild />
-          </Icon>
-          <Title>Guilds</Title>
-          <Count>( 561 )</Count>
-        </StatsItem>
-        <StatsItem>
-          <Icon>
-            <Character />
-          </Icon>
-          <Title>Characters</Title>
-          <Count>( 15,561 )</Count>
-        </StatsItem>
+        <Link href='/rankings'>
+          <a>
+            <StatsItem>
+              <Icon>
+                <Guild />
+              </Icon>
+              <Title>Guilds</Title>
+              <Count>( 561 )</Count>
+            </StatsItem>
+          </a>
+        </Link>
+        <Link href='/rankings'>
+          <a>
+            <StatsItem>
+              <Icon>
+                <Character />
+              </Icon>
+              <Title>Characters</Title>
+              <Count>( 15,561 )</Count>
+            </StatsItem>
+          </a>
+        </Link>
       </Statistics>
     </Container>
   );

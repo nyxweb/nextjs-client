@@ -50,12 +50,10 @@ export const Button = styled.button`
   color: #c3eaee;
   text-transform: uppercase;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  transition: 0.3s ease-in-out;
+  transition: 0.2s ease-in-out;
   cursor: pointer;
 
-  &:hover,
-  &:active,
-  &:focus {
+  &:hover {
     filter: brightness(1.2);
     border: none;
     outline: none;

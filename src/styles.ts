@@ -5,7 +5,7 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     font-size: 14px;
-    color: #61738e;
+    color: #98a8c1;
     background: #121a25;
   }
 
@@ -39,7 +39,9 @@ export default createGlobalStyle`
     border-radius: 3px;
     transition: 0.3s;
     outline: none;
+  }
 
+  input {
     &:hover,
     &:active,
     &:focus {

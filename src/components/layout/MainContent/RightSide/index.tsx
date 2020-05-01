@@ -1,6 +1,6 @@
 import { Container } from './styles';
 
-import ServerInfo from './children/ServerInfo';
+import ServerInfo from 'components/widgets/right/ServerInfo';
 
 const RightSide = () => {
   return (

@@ -30,9 +30,9 @@ export const GET_GUILDS = gql`
         G_Name
         G_Score
         G_Master
-        members {
-          Name
-        }
+        G_Mark
+        TotalResets
+        TotalMembers
       }
     }
   }

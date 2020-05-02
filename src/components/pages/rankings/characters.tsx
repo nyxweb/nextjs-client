@@ -17,14 +17,13 @@ import {
   HeadRow,
   Tbody,
 } from 'components/ui/DataTable';
-
-type Character = any;
+import { ICharacter } from 'types/Character';
 
 const Characters = () => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
 
-  const { loading, data } = useQuery(GET_CHARACTERS, {
+  const { loading, error, data } = useQuery(GET_CHARACTERS, {
     variables: { page, perPage },
   });
 
@@ -33,7 +32,7 @@ const Characters = () => {
       <Container>
         {loading ? (
           <Loader type='Triangle' color='#00BFFF' height={50} width={50} />
-        ) : !data ? (
+        ) : error || !data ? (
           'Looks like the server is down...'
         ) : (
           <Table>
@@ -46,7 +45,7 @@ const Characters = () => {
               </HeadRow>
             </Thead>
             <Tbody>
-              {data.characters.rows.map((char: Character, index: number) => (
+              {data.characters.rows.map((char: ICharacter, index: number) => (
                 <Row key={uuid()}>
                   <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
                   <Cell>{char.Name}</Cell>

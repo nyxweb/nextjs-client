@@ -1,9 +1,14 @@
 import { FC } from 'react';
 
 import { StyledName } from './styles';
-import { ICharacter } from 'types/Character';
 
-const Name: FC<{ char: ICharacter }> = ({ char: { Name, HOFWins } }) => {
+interface Character {
+  Name: string;
+  Class: number;
+  HOFWins: number;
+}
+
+const Name: FC<{ char: Character }> = ({ char: { Name, HOFWins } }) => {
   return (
     <StyledName>
       <span>{Name}</span>

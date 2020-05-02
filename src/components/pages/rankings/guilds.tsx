@@ -16,14 +16,13 @@ import {
   Row,
   Cell,
 } from 'components/ui/DataTable';
-
-type Guild = any;
+import { IGuild } from 'types/Guild';
 
 const Guilds = () => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
 
-  const { loading, data } = useQuery(GET_GUILDS, {
+  const { loading, error, data } = useQuery(GET_GUILDS, {
     variables: { page, perPage },
   });
 
@@ -32,7 +31,7 @@ const Guilds = () => {
       <Container>
         {loading ? (
           <Loader type='Triangle' color='#00BFFF' height={50} width={50} />
-        ) : !data ? (
+        ) : error || !data ? (
           'Looks like the server is down...'
         ) : (
           <Table>
@@ -41,18 +40,20 @@ const Guilds = () => {
                 <HeadCell>rank</HeadCell>
                 <HeadCell>name</HeadCell>
                 <HeadCell>master</HeadCell>
+                <HeadCell>resets</HeadCell>
                 <HeadCell>score</HeadCell>
                 <HeadCell>members</HeadCell>
               </HeadRow>
             </Thead>
             <Tbody>
-              {data.guilds.rows.map((guild: Guild, index: number) => (
+              {data.guilds.rows.map((guild: IGuild, index: number) => (
                 <Row key={uuid()}>
                   <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
                   <Cell>{guild.G_Name}</Cell>
                   <Cell>{guild.G_Master}</Cell>
+                  <Cell>{guild.TotalResets}</Cell>
                   <Cell>{guild.G_Score}</Cell>
-                  <Cell>{guild.members.length}</Cell>
+                  <Cell>{guild.TotalMembers}</Cell>
                 </Row>
               ))}
             </Tbody>

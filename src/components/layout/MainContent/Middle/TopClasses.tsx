@@ -6,8 +6,6 @@ import { CharactersWrapper, CharacterCard } from './styles';
 import Name from 'components/partials/character/Name';
 import { getClassImage } from 'utils/character';
 
-import { ICharacter } from 'types/Character';
-
 const TopClasses = () => {
   return (
     <CharactersWrapper>
@@ -20,7 +18,13 @@ const TopClasses = () => {
   );
 };
 
-const Card: FC<{ char: ICharacter | null }> = ({ char }) => {
+interface Character {
+  Name: string;
+  Class: number;
+  HOFWins: number;
+}
+
+const Card: FC<{ char: Character | null }> = ({ char }) => {
   if (!char) return null;
 
   return (

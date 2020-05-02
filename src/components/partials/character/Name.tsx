@@ -1,20 +1,24 @@
 import { FC } from 'react';
+import Link from 'next/link';
 
 import { StyledName } from './styles';
+import { ICharacter } from 'types/Character';
 
-interface Character {
-  Name: string;
-  Class: number;
-  HOFWins: number;
-}
-
-const Name: FC<{ char: Character }> = ({ char: { Name, HOFWins } }) => {
+const Name: FC<{ char: ICharacter }> = ({ char }) => {
   return (
-    <StyledName>
-      <span>{Name}</span>
-      <span className='status online' />
-      {getRankImage(HOFWins)}
-    </StyledName>
+    <Link href={`/char/${char.Name}`}>
+      <a>
+        <StyledName>
+          <span>{char.Name}</span>
+          <span
+            className={`status ${
+              char.status.ConnectStat ? 'online' : 'offline'
+            }`}
+          />
+          {getRankImage(char.HOFWins)}
+        </StyledName>
+      </a>
+    </Link>
   );
 };
 

@@ -9,6 +9,7 @@ export const GET_CHARACTERS = gql`
         Class
         cLevel
         Resets
+        HOFWins
         status {
           ConnectStat
         }

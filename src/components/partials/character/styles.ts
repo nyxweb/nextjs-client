@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledName = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   height: 17px;
   color: goldenrod;
@@ -21,6 +21,10 @@ export const StyledName = styled.div`
 
     &.online {
       background-color: green;
+    }
+
+    &.offline {
+      background-color: red;
     }
   }
 `;

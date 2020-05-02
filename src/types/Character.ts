@@ -1,3 +1,5 @@
+import { MEMB_STAT } from './User';
+
 export interface ICharacter {
   Name: string;
   cLevel: number;
@@ -28,6 +30,6 @@ export interface ICharacter {
   IsVip: number;
   VipExpirationTime: number;
   HOFWins: number;
-  // status: MEMB_STAT;
+  status: MEMB_STAT;
   // guild_member: GuildMember;
 }

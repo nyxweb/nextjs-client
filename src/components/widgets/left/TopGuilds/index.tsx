@@ -21,8 +21,6 @@ const TopGuilds = () => {
     variables: { perPage: 5 },
   });
 
-  console.log(error);
-
   return (
     <Wrapper title='Guilds' subTitle='top 5 strongest guilds'>
       <Container>

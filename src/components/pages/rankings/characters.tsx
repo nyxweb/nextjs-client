@@ -7,6 +7,7 @@ import { GET_CHARACTERS } from './queries';
 import { Container } from './styles';
 import { getClassName } from 'utils/character';
 
+import Name from 'components/partials/character/Name';
 import Pagination from 'components/ui/Pagination';
 import {
   Row,
@@ -48,7 +49,9 @@ const Characters = () => {
               {data.characters.rows.map((char: ICharacter, index: number) => (
                 <Row key={uuid()}>
                   <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
-                  <Cell>{char.Name}</Cell>
+                  <Cell>
+                    <Name char={char} />
+                  </Cell>
                   <Cell
                     dangerouslySetInnerHTML={{
                       __html: getClassName(char.Class),

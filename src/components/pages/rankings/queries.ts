@@ -10,12 +10,14 @@ export const GET_CHARACTERS = gql`
         cLevel
         Resets
         HOFWins
+        MapNumber
         status {
           ConnectStat
         }
         guild_member {
           guild {
             G_Name
+            G_Mark
           }
         }
       }

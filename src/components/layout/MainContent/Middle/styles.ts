@@ -55,10 +55,9 @@ export const CharactersWrapper = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.15);
 `;
 
-export const CharacterCard = styled.a`
+export const CharacterCard = styled.div`
   width: 110px;
   height: 120px;
-  cursor: pointer;
   transition: 0.2s ease-in-out;
   border-radius: 4px;
   display: flex;

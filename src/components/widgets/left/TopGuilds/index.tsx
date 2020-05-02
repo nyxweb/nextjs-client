@@ -15,6 +15,7 @@ import { GET_GUILDS } from 'components/pages/rankings/queries';
 import Loader from 'react-loader-spinner';
 import GuildMark from 'components/partials/guild/Mark';
 import { IGuild } from 'types/Guild';
+import Link from 'next/link';
 
 const TopGuilds = () => {
   const { loading, error, data } = useQuery(GET_GUILDS, {
@@ -58,7 +59,11 @@ const TopGuilds = () => {
               data.guilds.rows.map((guild: IGuild, i: number) => (
                 <Row key={i}>
                   <Cell>{i + 1}</Cell>
-                  <Cell>{guild.G_Name}</Cell>
+                  <Cell>
+                    <Link href={`guild/${guild.G_Name}`}>
+                      <a>{guild.G_Name}</a>
+                    </Link>
+                  </Cell>
                   <Cell>{guild.TotalMembers}</Cell>
                   <Cell>{guild.TotalResets}</Cell>
                   <Cell>

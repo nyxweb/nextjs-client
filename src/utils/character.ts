@@ -56,7 +56,7 @@ export const getClassName = (Class: number) => {
   }
 };
 
-export const location = (map: number) => {
+export const getMapName = (map: number) => {
   switch (map) {
     case 0:
       return "<font color='#e3e48b'>Lorencia</font>";

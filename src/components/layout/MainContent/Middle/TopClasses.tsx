@@ -26,6 +26,10 @@ const GET_HOF_CHARS = gql`
 const TopClasses = () => {
   const { loading, error, data } = useQuery(GET_HOF_CHARS);
 
+  if (!loading && !error && !data) {
+    return null;
+  }
+
   return (
     <CharactersWrapper>
       {loading ? (

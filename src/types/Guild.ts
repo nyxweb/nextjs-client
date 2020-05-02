@@ -11,3 +11,11 @@ export interface IGuild {
   TotalResets: number;
   TotalMembers: number;
 }
+
+export interface GuildMember {
+  Name: string;
+  G_Name: string;
+  G_Level: string;
+  G_Status: string;
+  guild: IGuild;
+}

@@ -6,3 +6,20 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const GuildWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 5px;
+
+  a {
+    margin-right: 5px;
+  }
+`;
+
+export const MarkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

@@ -1,4 +1,5 @@
 import { MEMB_STAT } from './User';
+import { GuildMember } from './Guild';
 
 export interface ICharacter {
   Name: string;
@@ -31,5 +32,5 @@ export interface ICharacter {
   VipExpirationTime: number;
   HOFWins: number;
   status: MEMB_STAT;
-  // guild_member: GuildMember;
+  guild_member: GuildMember;
 }

@@ -11,7 +11,7 @@ import {
   TopTitle,
   SelectedTitle,
 } from './styles';
-import { ArrowUp, ArrowDown, Remove } from 'components/ui/icons';
+import { ArrowDown, Remove } from 'components/ui/icons';
 
 export type DropDownOption = { name?: string; value: string | number };
 
@@ -77,7 +77,9 @@ const DropDown: FC<Props> = ({
         ) : (
           title || 'select option'
         )}
-        <Arrow>{open ? <ArrowUp /> : <ArrowDown />}</Arrow>
+        <Arrow className={open ? 'rotate' : ''}>
+          <ArrowDown />
+        </Arrow>
       </Title>
       <OptionsList className={open ? 'open' : 'closed'}>
         {options.length ? (

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  background: url('/images/layout/light-bg.jpg');
+`;
 
 export const Header = styled.div`
   height: 90px;
@@ -52,7 +54,6 @@ export const Fill = styled.div`
 
 export const Statistics = styled.div`
   display: flex;
-  background: rgba(50, 76, 125, 0.2);
 `;
 
 export const StatsItem = styled.div`
@@ -67,10 +68,12 @@ export const StatsItem = styled.div`
   border-radius: 3px;
   cursor: pointer;
   transition: 0.1s ease-in-out;
+  user-select: none;
 
   &:hover {
     background: rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    filter: brightness(1.5);
   }
 `;
 

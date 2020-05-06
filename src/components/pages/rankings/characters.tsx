@@ -31,85 +31,81 @@ const Characters = () => {
   });
 
   return (
-    <div>
-      <Container>
-        <Table>
-          <Thead>
-            <HeadRow>
-              <HeadCell>rank</HeadCell>
-              <HeadCell>name</HeadCell>
-              <HeadCell>class</HeadCell>
-              <HeadCell>level</HeadCell>
-              <HeadCell>location</HeadCell>
-              <HeadCell>guild</HeadCell>
-            </HeadRow>
-          </Thead>
-          <Tbody>
-            {loading ? (
-              <Row>
-                <Cell colSpan={5}>
-                  <Loader
-                    type='Triangle'
-                    color='#00BFFF'
-                    height={50}
-                    width={50}
-                  />
+    <Container>
+      <Table>
+        <Thead>
+          <HeadRow>
+            <HeadCell>rank</HeadCell>
+            <HeadCell>name</HeadCell>
+            <HeadCell>class</HeadCell>
+            <HeadCell>level</HeadCell>
+            <HeadCell>location</HeadCell>
+            <HeadCell>guild</HeadCell>
+          </HeadRow>
+        </Thead>
+        <Tbody>
+          {loading ? (
+            <Row>
+              <Cell colSpan={5}>
+                <Loader
+                  type='Triangle'
+                  color='#00BFFF'
+                  height={50}
+                  width={50}
+                />
+              </Cell>
+            </Row>
+          ) : error ? (
+            <Row>
+              <Cell colSpan={5}>Looks like the server is down...</Cell>
+            </Row>
+          ) : !data.characters.rows.length ? (
+            <Row>
+              <Cell colSpan={5}>No characters found</Cell>
+            </Row>
+          ) : (
+            data.characters.rows.map((char: ICharacter, index: number) => (
+              <Row key={uuid()}>
+                <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
+                <Cell>
+                  <Name char={char} />
+                </Cell>
+                <Cell
+                  dangerouslySetInnerHTML={{
+                    __html: getClassName(char.Class),
+                  }}
+                />
+                <Cell>
+                  {char.cLevel}
+                  <sup>{char.Resets}</sup>
+                </Cell>
+                <Cell
+                  dangerouslySetInnerHTML={{
+                    __html: getMapName(char.MapNumber),
+                  }}
+                />
+                <Cell>
+                  <GuildWrapper>
+                    {char.guild_member ? (
+                      <>
+                        <Link href={`guild/${char.guild_member.guild.G_Name}`}>
+                          <a>{char.guild_member.guild.G_Name}</a>
+                        </Link>
+                        <GuildMark
+                          mark={char.guild_member.guild.G_Mark}
+                          size={20}
+                        />
+                      </>
+                    ) : (
+                      `-`
+                    )}
+                  </GuildWrapper>
                 </Cell>
               </Row>
-            ) : error ? (
-              <Row>
-                <Cell colSpan={5}>Looks like the server is down...</Cell>
-              </Row>
-            ) : !data.characters.rows.length ? (
-              <Row>
-                <Cell colSpan={5}>No characters found</Cell>
-              </Row>
-            ) : (
-              data.characters.rows.map((char: ICharacter, index: number) => (
-                <Row key={uuid()}>
-                  <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
-                  <Cell>
-                    <Name char={char} />
-                  </Cell>
-                  <Cell
-                    dangerouslySetInnerHTML={{
-                      __html: getClassName(char.Class),
-                    }}
-                  />
-                  <Cell>
-                    {char.cLevel}
-                    <sup>{char.Resets}</sup>
-                  </Cell>
-                  <Cell
-                    dangerouslySetInnerHTML={{
-                      __html: getMapName(char.MapNumber),
-                    }}
-                  />
-                  <Cell>
-                    <GuildWrapper>
-                      {char.guild_member ? (
-                        <>
-                          <Link
-                            href={`guild/${char.guild_member.guild.G_Name}`}
-                          >
-                            <a>{char.guild_member.guild.G_Name}</a>
-                          </Link>
-                          <GuildMark
-                            mark={char.guild_member.guild.G_Mark}
-                            size={20}
-                          />
-                        </>
-                      ) : (
-                        `-`
-                      )}
-                    </GuildWrapper>
-                  </Cell>
-                </Row>
-              ))
-            )}
-          </Tbody>
-        </Table>
-      </Container>
+            ))
+          )}
+        </Tbody>
+      </Table>
       <Pagination
         page={page}
         perPage={perPage}
@@ -117,7 +113,7 @@ const Characters = () => {
         setPerPage={setPerPage}
         totalCount={loading || !data ? 0 : data.characters.count}
       />
-    </div>
+    </Container>
   );
 };
 

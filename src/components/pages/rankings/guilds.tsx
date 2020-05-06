@@ -29,68 +29,66 @@ const Guilds = () => {
   });
 
   return (
-    <div>
-      <Container>
-        <Table>
-          <Thead>
-            <HeadRow>
-              <HeadCell>rank</HeadCell>
-              <HeadCell>mark</HeadCell>
-              <HeadCell>name</HeadCell>
-              <HeadCell>resets</HeadCell>
-              <HeadCell>score</HeadCell>
-              <HeadCell>members</HeadCell>
-              <HeadCell>master</HeadCell>
-            </HeadRow>
-          </Thead>
-          <Tbody>
-            {loading ? (
-              <Row>
-                <Cell colSpan={6}>
-                  <Loader
-                    type='Triangle'
-                    color='#00BFFF'
-                    height={50}
-                    width={50}
-                  />
+    <Container>
+      <Table>
+        <Thead>
+          <HeadRow>
+            <HeadCell>rank</HeadCell>
+            <HeadCell>mark</HeadCell>
+            <HeadCell>name</HeadCell>
+            <HeadCell>resets</HeadCell>
+            <HeadCell>score</HeadCell>
+            <HeadCell>members</HeadCell>
+            <HeadCell>master</HeadCell>
+          </HeadRow>
+        </Thead>
+        <Tbody>
+          {loading ? (
+            <Row>
+              <Cell colSpan={6}>
+                <Loader
+                  type='Triangle'
+                  color='#00BFFF'
+                  height={50}
+                  width={50}
+                />
+              </Cell>
+            </Row>
+          ) : error ? (
+            <Row>
+              <Cell colSpan={6}>Looks like the server is down...</Cell>
+            </Row>
+          ) : !data.guilds.rows.length ? (
+            <Row>
+              <Cell colSpan={6}>No guilds found</Cell>
+            </Row>
+          ) : (
+            data.guilds.rows.map((guild: IGuild, index: number) => (
+              <Row key={uuid()}>
+                <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
+                <Cell>
+                  <MarkWrapper>
+                    <GuildMark mark={guild.G_Mark} size={25} />
+                  </MarkWrapper>
+                </Cell>
+                <Cell>
+                  <Link href={`guild/${guild.G_Name}`}>
+                    <a>{guild.G_Name}</a>
+                  </Link>
+                </Cell>
+                <Cell>{guild.TotalResets}</Cell>
+                <Cell>{guild.G_Score}</Cell>
+                <Cell>{guild.TotalMembers}</Cell>
+                <Cell>
+                  <Link href={`char/${guild.G_Master}`}>
+                    <a>{guild.G_Master}</a>
+                  </Link>
                 </Cell>
               </Row>
-            ) : error ? (
-              <Row>
-                <Cell colSpan={6}>Looks like the server is down...</Cell>
-              </Row>
-            ) : !data.guilds.rows.length ? (
-              <Row>
-                <Cell colSpan={6}>No guilds found</Cell>
-              </Row>
-            ) : (
-              data.guilds.rows.map((guild: IGuild, index: number) => (
-                <Row key={uuid()}>
-                  <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
-                  <Cell>
-                    <MarkWrapper>
-                      <GuildMark mark={guild.G_Mark} size={25} />
-                    </MarkWrapper>
-                  </Cell>
-                  <Cell>
-                    <Link href={`guild/${guild.G_Name}`}>
-                      <a>{guild.G_Name}</a>
-                    </Link>
-                  </Cell>
-                  <Cell>{guild.TotalResets}</Cell>
-                  <Cell>{guild.G_Score}</Cell>
-                  <Cell>{guild.TotalMembers}</Cell>
-                  <Cell>
-                    <Link href={`char/${guild.G_Master}`}>
-                      <a>{guild.G_Master}</a>
-                    </Link>
-                  </Cell>
-                </Row>
-              ))
-            )}
-          </Tbody>
-        </Table>
-      </Container>
+            ))
+          )}
+        </Tbody>
+      </Table>
       <Pagination
         page={page}
         perPage={perPage}
@@ -98,7 +96,7 @@ const Guilds = () => {
         setPerPage={setPerPage}
         totalCount={loading || !data ? 0 : data.guilds.count}
       />
-    </div>
+    </Container>
   );
 };
 

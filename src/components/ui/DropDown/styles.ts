@@ -39,6 +39,13 @@ export const Arrow = styled.div`
   svg {
     width: 20px;
     height: 20px;
+    transition: 0.3s;
+  }
+
+  &.rotate {
+    svg {
+      transform: rotate(180deg);
+    }
   }
 `;
 
@@ -50,7 +57,6 @@ export const OptionsList = styled.div`
 
   max-height: 130px;
   transition: 0.3s;
-  background: #1a232e;
   border-radius: 4px;
 
   overflow: hidden;
@@ -73,10 +79,15 @@ export const Option = styled.div`
   padding: 0 0 0 10px;
   height: 30px;
   border-bottom: 1px solid #23344a;
+  background: #1a232e;
   cursor: pointer;
 
   &:last-of-type {
     border: none;
+  }
+
+  &:hover {
+    background: #18212b;
   }
 `;
 

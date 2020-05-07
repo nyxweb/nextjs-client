@@ -29,7 +29,7 @@ const Navbar = () => {
             <span />
           </a>
         </Link>
-        <Link href='/stats'>
+        <Link href='/statistics'>
           <a>
             Statistics
             <span />

@@ -13,9 +13,16 @@ export const Title = styled.div`
   padding: 0 10px;
   background: #1a232e;
   border: 1px solid #23344a;
-  border-radius: 4px;
+  border-bottom: 1px solid transparent;
   cursor: pointer;
   user-select: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+
+  &.closed {
+    border-radius: 4px;
+    border: 1px solid #23344a;
+  }
 `;
 
 export const TitleWrapper = styled.div`
@@ -51,13 +58,15 @@ export const Arrow = styled.div`
 
 export const OptionsList = styled.div`
   position: absolute;
-  top: calc(100% + 5px);
+  top: 100%;
   left: 0;
   right: 0;
 
   max-height: 130px;
-  transition: 0.3s;
-  border-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border: 1px solid #23344a;
+  transition: max-height 0.3s;
 
   overflow: hidden;
   overflow-y: auto;
@@ -69,6 +78,7 @@ export const OptionsList = styled.div`
 
   &.closed {
     max-height: 0;
+    border: 1px solid transparent;
   }
 `;
 

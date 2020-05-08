@@ -62,6 +62,7 @@ const DropDown: FC<Props> = ({
       <Title
         onClick={() => setOpen(!open)}
         style={{ width, height: height ? height : !title ? 35 : 45 }}
+        className={open ? 'open' : 'closed'}
       >
         {selected !== '' ? (
           title ? (

@@ -10,17 +10,21 @@ import {
   Cell,
   CenterCell,
 } from 'components/ui/DataTable';
-import { useQuery } from '@apollo/client';
-import { GET_GUILDS } from 'components/pages/rankings/queries';
+// import { useQuery } from '@apollo/client';
+// import { GET_GUILDS } from 'components/pages/rankings/queries';
 import Loader from 'react-loader-spinner';
 import GuildMark from 'components/partials/guild/Mark';
 import { IGuild } from 'types/Guild';
 import Link from 'next/link';
 
 const TopGuilds = () => {
-  const { loading, error, data } = useQuery(GET_GUILDS, {
-    variables: { perPage: 5 },
-  });
+  // const { loading, error, data } = useQuery(GET_GUILDS, {
+  //   variables: { perPage: 5 },
+  // });
+
+  const loading = false;
+  const error = false;
+  const data: any = [];
 
   return (
     <Wrapper title='Guilds' subTitle='top 5 strongest guilds'>

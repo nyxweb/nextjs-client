@@ -1,31 +1,71 @@
-import { FC } from 'react';
-import Head from 'next/head';
 import Router from 'next/router';
-import { AppProps } from 'next/app';
-import NProgress from 'nprogress';
-
-import { withApollo } from 'lib/apollo';
+import App, { AppProps } from 'next/app';
+import { Provider as OvermindProvider } from 'overmind-react';
+import Progress from 'nprogress';
+import {
+  createOvermind,
+  createOvermindSSR,
+  rehydrate,
+  Overmind,
+  OvermindSSR,
+} from 'overmind';
+import { config, Config } from 'brains';
+import 'styles/nprogress.css';
+import GlobalStyles from 'styles/global';
 import Layout from 'components/layout';
-import GlobalStyles from 'styles';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
-Router.events.on('routeChangeStart', () => NProgress.start());
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+class MyApp extends App {
+  store: Overmind<Config> | OvermindSSR<Config>;
 
-const App: FC<AppProps> = ({ Component, pageProps }) => {
-  return (
-    <Layout>
-      <Head>
-        <title>NyxWeb v2</title>
-        <link rel='icon' type='image/png' href='/images/favicon.png' />
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-        <link rel='stylesheet' type='text/css' href='/css/nprogress.css' />
-      </Head>
-      <GlobalStyles />
-      <Component {...pageProps} />
-    </Layout>
-  );
-};
+  // CLIENT: On initial route
+  // SERVER: On initial route
+  constructor(props: AppProps) {
+    super(props);
 
-export default withApollo(App);
+    const mutations = props.pageProps.mutations || [];
+
+    if (typeof window !== 'undefined') {
+      // On the client we just instantiate the Overmind instance and run
+      // the "changePage" action
+      this.store = createOvermind<Config>(config as Config);
+      // this.store.actions.changePage(mutations);
+    } else {
+      // On the server we rehydrate the mutations to an SSR instance of Overmind,
+      // as we do not want to run any additional logic here
+      this.store = createOvermindSSR<Config>(config as Config);
+      rehydrate(this.store.state, mutations);
+    }
+  }
+
+  componentDidUpdate() {
+    // this.store.actions.changePage(this.props.pageProps.mutations || []);
+  }
+
+  componentDidMount() {
+    Router.events.on('routeChangeStart', () => Progress.start());
+    Router.events.on('routeChangeComplete', () => Progress.done());
+    Router.events.on('routeChangeError', () => Progress.done());
+  }
+
+  componentWillUnmount() {
+    Router.events.off('routeChangeStart', () => Progress.start());
+    Router.events.off('routeChangeComplete', () => Progress.done());
+    Router.events.off('routeChangeError', () => Progress.done());
+  }
+
+  render() {
+    const { Component } = this.props;
+
+    return (
+      <OvermindProvider value={this.store}>
+        <Layout>
+          <GlobalStyles />
+          <Component {...this.props.pageProps} />
+        </Layout>
+      </OvermindProvider>
+    );
+  }
+}
+
+export default MyApp;

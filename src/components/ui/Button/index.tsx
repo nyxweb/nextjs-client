@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Container, Loader } from './styles';
 
 interface Props {
@@ -19,10 +19,18 @@ const Button: FC<Props> = ({
   height = 35,
   fontSize = 15,
 }) => {
+  useEffect(() => {
+    if (loading && onClick) {
+      setTimeout(() => {
+        onClick();
+      }, 3000);
+    }
+  }, [loading]);
+
   return (
     <Container
-      className={type}
-      onClick={onClick}
+      className={`${type} ${loading ? 'loading' : ''}`}
+      onClick={!loading ? onClick : () => {}}
       style={{ width, height, fontSize }}
     >
       {loading && (

@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import Loader from 'react-loader-spinner';
+import { useOvermind } from 'brains';
 
-import { GET_GUILDS } from './queries';
 import { Container, MarkWrapper } from './styles';
 
 import Pagination from 'components/ui/Pagination';
@@ -16,17 +15,17 @@ import {
   Row,
   Cell,
 } from 'components/ui/DataTable';
-import { IGuild } from 'types/Guild';
 import Link from 'next/link';
 import GuildMark from 'components/partials/guild/Mark';
 
 const Guilds = () => {
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(20);
+  const { state, actions } = useOvermind();
 
-  const { loading, error, data } = useQuery(GET_GUILDS, {
-    variables: { page, perPage },
-  });
+  useEffect(() => {
+    actions.rank.getGuilds({ page, perPage });
+  }, [page, perPage]);
 
   return (
     <Container>
@@ -43,9 +42,9 @@ const Guilds = () => {
           </HeadRow>
         </Thead>
         <Tbody>
-          {loading ? (
+          {state.rank.isLoading ? (
             <Row>
-              <Cell colSpan={6}>
+              <Cell colSpan={7}>
                 <Loader
                   type='Triangle'
                   color='#00BFFF'
@@ -54,16 +53,16 @@ const Guilds = () => {
                 />
               </Cell>
             </Row>
-          ) : error ? (
+          ) : !state.rank.guilds ? (
             <Row>
-              <Cell colSpan={6}>Looks like the server is down...</Cell>
+              <Cell colSpan={7}>Looks like the server is down...</Cell>
             </Row>
-          ) : !data.guilds.rows.length ? (
+          ) : !state.rank.guilds.count ? (
             <Row>
-              <Cell colSpan={6}>No guilds found</Cell>
+              <Cell colSpan={7}>No guilds found</Cell>
             </Row>
           ) : (
-            data.guilds.rows.map((guild: IGuild, index: number) => (
+            state.rank.guilds.rows.map((guild, index) => (
               <Row key={uuid()}>
                 <Cell>{(page - 1) * perPage + (index + 1)}</Cell>
                 <Cell>
@@ -94,7 +93,11 @@ const Guilds = () => {
         perPage={perPage}
         setPage={setPage}
         setPerPage={setPerPage}
-        totalCount={loading || !data ? 0 : data.guilds.count}
+        totalCount={
+          state.rank.isLoading || !state.rank.guilds
+            ? 0
+            : state.rank.guilds.count
+        }
       />
     </Container>
   );

@@ -1,31 +1,67 @@
-import { FC } from 'react';
-import Head from 'next/head';
 import Router from 'next/router';
-import { AppProps } from 'next/app';
-import NProgress from 'nprogress';
-
-import { withApollo } from 'lib/apollo';
+import App, { AppProps } from 'next/app';
+import Head from 'next/head';
+import { Provider as OvermindProvider } from 'overmind-react';
+import Progress from 'nprogress';
+import {
+  createOvermind,
+  createOvermindSSR,
+  Overmind,
+  OvermindSSR,
+} from 'overmind';
+import { config, Config } from 'brains';
 import Layout from 'components/layout';
-import GlobalStyles from 'styles';
+
+// Styles
+import GlobalStyles from 'styles/global';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import 'styles/nprogress.css';
 
-Router.events.on('routeChangeStart', () => NProgress.start());
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+class NyxWeb extends App {
+  brains: Overmind<Config> | OvermindSSR<Config>;
 
-const App: FC<AppProps> = ({ Component, pageProps }) => {
-  return (
-    <Layout>
-      <Head>
-        <title>NyxWeb v2</title>
-        <link rel='icon' type='image/png' href='/images/favicon.png' />
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-        <link rel='stylesheet' type='text/css' href='/css/nprogress.css' />
-      </Head>
-      <GlobalStyles />
-      <Component {...pageProps} />
-    </Layout>
-  );
-};
+  constructor(props: AppProps) {
+    super(props);
 
-export default withApollo(App);
+    if (typeof window !== 'undefined') {
+      this.brains = createOvermind<Config>(config as Config);
+    } else {
+      this.brains = createOvermindSSR<Config>(config as Config);
+    }
+  }
+
+  componentDidMount() {
+    Router.events.on('routeChangeStart', Progress.start);
+    Router.events.on('routeChangeComplete', Progress.done);
+    Router.events.on('routeChangeError', Progress.done);
+  }
+
+  componentWillUnmount() {
+    Router.events.off('routeChangeStart', Progress.start);
+    Router.events.off('routeChangeComplete', Progress.done);
+    Router.events.off('routeChangeError', Progress.done);
+  }
+
+  render() {
+    const { Component } = this.props;
+
+    return (
+      <OvermindProvider value={this.brains}>
+        <Layout>
+          <Head>
+            <title>{this.brains.state.app.title}</title>
+            <link rel='icon' type='image/png' href='/images/favicon.png' />
+            <meta
+              name='viewport'
+              content='initial-scale=1.0, width=device-width'
+            />
+          </Head>
+          <GlobalStyles />
+          <Component {...this.props.pageProps} />
+        </Layout>
+      </OvermindProvider>
+    );
+  }
+}
+
+export default NyxWeb;

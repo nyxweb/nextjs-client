@@ -2,9 +2,8 @@ import { FC } from 'react';
 import Link from 'next/link';
 
 import { StyledName } from './styles';
-import { ICharacter } from 'types/Character';
 
-const Name: FC<{ char: ICharacter }> = ({ char }) => {
+const Name: FC<{ char: any }> = ({ char }) => {
   return (
     <Link href={`/char/${char.Name}`}>
       <a>

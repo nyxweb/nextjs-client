@@ -17,6 +17,10 @@ export interface IAppState {
     guilds: GuildsResult | null;
 
     widgets: {
+      topHof: {
+        isLoading: boolean;
+        data: WidgetCharacters | null;
+      };
       characters: {
         isLoading: boolean;
         data: WidgetCharacters | null;

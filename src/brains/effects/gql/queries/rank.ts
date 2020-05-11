@@ -51,7 +51,7 @@ export const getGuilds: Query<{ guilds: GuildsResult }, GuildsPayload> = gql`
   }
 `;
 
-export const getWidgetCharacters: Query<{
+export const getWidgetTopHof: Query<{
   topHof: WidgetCharacters;
 }> = gql`
   query topHof {
@@ -63,6 +63,28 @@ export const getWidgetCharacters: Query<{
       HOFWins
       status {
         ConnectStat
+      }
+    }
+  }
+`;
+
+export const getWidgetCharacters: Query<{
+  characters: CharactersResult;
+}> = gql`
+  query characters {
+    characters(
+      perPage: 5
+      order: [[HOFWins, DESC], [Resets, DESC], [cLevel, DESC]]
+    ) {
+      rows {
+        Name
+        Class
+        cLevel
+        Resets
+        HOFWins
+        status {
+          ConnectStat
+        }
       }
     }
   }

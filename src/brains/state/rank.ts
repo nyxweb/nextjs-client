@@ -3,6 +3,10 @@ export const RankState = {
   characters: null,
   guilds: null,
   widgets: {
+    topHof: {
+      isLoading: true,
+      data: null,
+    },
     characters: {
       isLoading: true,
       data: null,

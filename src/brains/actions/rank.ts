@@ -31,11 +31,23 @@ export const getGuilds: AsyncAction<GuildsPayload> = async (
   }
 };
 
+export const getWidgetTopHof: AsyncAction = async ({ state, effects }) => {
+  try {
+    state.rank.widgets.topHof.isLoading = true;
+    const { topHof } = await effects.gql.queries.getWidgetTopHof();
+    state.rank.widgets.topHof.data = topHof;
+  } catch (error) {
+    state.rank.widgets.topHof.data = null;
+  } finally {
+    state.rank.widgets.topHof.isLoading = false;
+  }
+};
+
 export const getWidgetCharacters: AsyncAction = async ({ state, effects }) => {
   try {
     state.rank.widgets.characters.isLoading = true;
-    const { topHof } = await effects.gql.queries.getWidgetCharacters();
-    state.rank.widgets.characters.data = topHof;
+    const { characters } = await effects.gql.queries.getWidgetCharacters();
+    state.rank.widgets.characters.data = characters.rows;
   } catch (error) {
     state.rank.widgets.characters.data = null;
   } finally {

@@ -1,49 +1,57 @@
-import { FC } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { FC, useEffect } from 'react';
 import Loader from 'react-loader-spinner';
 import { v4 as uuid } from 'uuid';
 
 import { CharactersWrapper, CharacterCard } from './styles';
 import Name from 'components/partials/character/Name';
 import { getClassImage } from 'utils/character';
-import { ICharacter } from 'types/Character';
+import { useOvermind } from 'brains';
 
-const GET_HOF_CHARS = gql`
-  query topHof {
-    topHof {
-      Name
-      Class
-      cLevel
-      Resets
-      HOFWins
-      status {
-        ConnectStat
-      }
-    }
-  }
-`;
+// const GET_HOF_CHARS = gql`
+//   query topHof {
+//     topHof {
+//       Name
+//       Class
+//       cLevel
+//       Resets
+//       HOFWins
+//       status {
+//         ConnectStat
+//       }
+//     }
+//   }
+// `;
 
 const TopClasses = () => {
-  const { loading, error, data } = useQuery(GET_HOF_CHARS);
+  const { state, actions } = useOvermind();
 
-  if (!loading && !error && !data) {
+  useEffect(() => {
+    actions.rank.getWidgetCharacters();
+  }, []);
+
+  if (
+    !state.rank.widgets.characters.isLoading &&
+    !state.rank.widgets.characters.data
+  ) {
     return null;
   }
 
   return (
     <CharactersWrapper>
-      {loading ? (
+      {state.rank.widgets.characters.isLoading ? (
         <Loader type='Triangle' color='#00BFFF' height={50} width={50} />
-      ) : error ? (
+      ) : !state.rank.widgets.characters.data ? (
         'Looks like the server is down...'
       ) : (
-        data.topHof.map((char: ICharacter) => <Card char={char} key={uuid()} />)
+        state.rank.widgets.characters.data.map((char) => (
+          <Card char={char} key={uuid()} />
+        ))
       )}
     </CharactersWrapper>
   );
 };
 
-const Card: FC<{ char: ICharacter | null }> = ({ char }) => {
+const Card: FC<{ char: any }> = ({ char }) => {
   if (!char) return null;
 
   return (

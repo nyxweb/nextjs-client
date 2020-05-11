@@ -1,3 +1,10 @@
+import { useEffect } from 'react';
+import Link from 'next/link';
+import Loader from 'react-loader-spinner';
+import GuildMark from 'components/partials/guild/Mark';
+import { useOvermind } from 'brains';
+
+// Styles
 import { Container } from './styles';
 import Wrapper from '../Wrapper';
 import {
@@ -10,21 +17,13 @@ import {
   Cell,
   CenterCell,
 } from 'components/ui/DataTable';
-// import { useQuery } from '@apollo/client';
-// import { GET_GUILDS } from 'components/pages/rankings/queries';
-import Loader from 'react-loader-spinner';
-import GuildMark from 'components/partials/guild/Mark';
-import { IGuild } from 'types/Guild';
-import Link from 'next/link';
 
 const TopGuilds = () => {
-  // const { loading, error, data } = useQuery(GET_GUILDS, {
-  //   variables: { perPage: 5 },
-  // });
+  const { state, actions } = useOvermind();
 
-  const loading = false;
-  const error = false;
-  const data: any = [];
+  useEffect(() => {
+    actions.rank.getWidgetGuilds();
+  }, []);
 
   return (
     <Wrapper title='Guilds' subTitle='top 5 strongest guilds'>
@@ -40,7 +39,7 @@ const TopGuilds = () => {
             </HeadRow>
           </Thead>
           <Tbody>
-            {loading ? (
+            {state.rank.widgets.guilds.isLoading ? (
               <Row>
                 <Cell colSpan={5}>
                   <Loader
@@ -51,16 +50,16 @@ const TopGuilds = () => {
                   />
                 </Cell>
               </Row>
-            ) : error || !data ? (
+            ) : !state.rank.widgets.guilds.data ? (
               <Row>
                 <Cell colSpan={5}>Server issue</Cell>
               </Row>
-            ) : !data.guilds.rows.length ? (
+            ) : !state.rank.widgets.guilds.data.length ? (
               <Row>
                 <Cell colSpan={5}>No guilds</Cell>
               </Row>
             ) : (
-              data.guilds.rows.map((guild: IGuild, i: number) => (
+              state.rank.widgets.guilds.data.map((guild, i) => (
                 <Row key={i}>
                   <Cell>{i + 1}</Cell>
                   <Cell>

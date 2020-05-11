@@ -1,14 +1,10 @@
-import { rehydrate } from 'overmind';
+// import { rehydrate } from 'overmind';
 import { Action } from 'brains';
 
-export const changePage: Action<Action[]> = ({ state }, mutations) => {
-  rehydrate(state, mutations || []);
-};
+import * as rank from './rank';
 
-export const setLoading: Action<boolean | undefined> = (
-  { state: { loading } },
-  isLoading,
-) => {
-  if (isLoading !== undefined) loading = isLoading;
-  else loading = !loading;
+export { rank };
+
+export const toggleLoading: Action = ({ state }) => {
+  state.isLoading = !state.isLoading;
 };

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   color: #c3eaee;
@@ -21,10 +21,13 @@ export const Container = styled.div`
     background: url('/images/partials/button.jpg') no-repeat center center/cover;
   }
 
+  &.loading {
+    opacity: 0.7;
+    cursor: wait;
+  }
+
   &:hover {
     filter: brightness(1.1);
-    border: none;
-    outline: none;
   }
 `;
 

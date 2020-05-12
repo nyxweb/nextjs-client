@@ -31,4 +31,7 @@ export interface IAppState {
       };
     };
   };
+  config: {
+    events: string[];
+  };
 }

@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import Loader from 'react-loader-spinner';
 import { useOvermind } from 'brains';
-
-import { Container, MarkWrapper } from './styles';
+import styled from 'styled-components';
 
 import Pagination from 'components/ui/Pagination';
 import {
@@ -104,3 +103,17 @@ const Guilds = () => {
 };
 
 export default Guilds;
+
+/** STYLES */
+
+const Container = styled.div`
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const MarkWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

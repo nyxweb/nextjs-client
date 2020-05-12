@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Container, Wrapper } from './styles';
+import styled from 'styled-components';
 
 // Components
 import Navbar from './Navbar';
@@ -21,3 +21,18 @@ const Layout: FC = ({ children }) => {
 };
 
 export default Layout;
+
+/** STYLES */
+
+const Container = styled.div`
+  margin: 0 auto;
+  min-width: 1280px;
+  max-width: 1920px;
+  background: url('/images/layout/top-bg.jpg') no-repeat top -100px center,
+    url('/images/layout/bottom-bg.jpg') no-repeat bottom center;
+`;
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  width: 1200px;
+`;

@@ -3,8 +3,8 @@ import Link from 'next/link';
 import Loader from 'react-loader-spinner';
 import { v4 as uuid } from 'uuid';
 import { useOvermind } from 'brains';
+import styled from 'styled-components';
 
-import { Container, GuildWrapper, SortContainer } from './styles';
 import { getClassName, getMapName } from 'utils/character';
 
 import Name from 'components/partials/character/Name';
@@ -203,3 +203,39 @@ const Characters = () => {
 };
 
 export default Characters;
+
+/** STYLES */
+
+const Container = styled.div`
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const GuildWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 5px;
+
+  a {
+    margin-right: 5px;
+  }
+`;
+
+const SortContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
+  background: rgba(63, 85, 114, 0.1);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+
+  a {
+    padding: 5px;
+
+    &.selected {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+`;

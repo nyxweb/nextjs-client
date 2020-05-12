@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import styled from 'styled-components';
 import { colorDecode } from 'utils/guild';
-import { GuildMark, MarkCell } from './styles';
 
 interface Props {
   mark: any;
@@ -28,3 +28,13 @@ const Mark: FC<Props> = ({ mark, size = 30 }) => {
 };
 
 export default Mark;
+
+/** STYLES */
+
+const GuildMark = styled.div`
+  display: inline-block;
+`;
+
+const MarkCell = styled.div`
+  float: left;
+`;
